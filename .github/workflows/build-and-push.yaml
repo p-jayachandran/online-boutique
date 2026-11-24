@@ -78,8 +78,10 @@ jobs:
     steps:
       - name: Get GitHub Runner IP
         run: |
-          echo "GitHub Runner Public IP:"
-          curl -s https://checkip.amazonaws.com
+          RUNNER_IP=$(curl -s https://checkip.amazonaws.com)
+          echo "GitHub Runner Public IP: $RUNNER_IP"
+          echo "Waiting 300 seconds for AWS Security Group update..."
+          sleep 300
 
       - name: Checkout repository
         uses: actions/checkout@v4
