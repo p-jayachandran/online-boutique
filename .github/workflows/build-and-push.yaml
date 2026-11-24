@@ -1,3 +1,21 @@
+name: Build and Push Online Boutique Images
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-and-push:
+    name: Build and Push Images
+    runs-on: ubuntu-latest
+
+    # Keep your existing build job steps and matrix here
 
   deploy-to-ec2:
     name: Deploy to EC2 Kubernetes
@@ -12,16 +30,4 @@
         run: |
           cd /home/ubuntu/online-boutique
           git pull origin main
-
-          sudo kubectl apply -k kubernetes-manifests/
-
-          sudo kubectl rollout status deployment/adservice --timeout=180s
-          sudo kubectl rollout status deployment/cartservice --timeout=180s
-          sudo kubectl rollout status deployment/checkoutservice --timeout=180s
-          sudo kubectl rollout status deployment/currencyservice --timeout=180s
-          sudo kubectl rollout status deployment/emailservice --timeout=180s
-          sudo kubectl rollout status deployment/frontend --timeout=180s
-          sudo kubectl rollout status deployment/paymentservice --timeout=180s
-          sudo kubectl rollout status deployment/productcatalogservice --timeout=180s
-          sudo kubectl rollout status deployment/recommendationservice --timeout=180s
-          sudo kubectl rollout status deployment/shippingservice --timeout=180s
+          sudo kubectl apply -k kubernetes-manifests/v
